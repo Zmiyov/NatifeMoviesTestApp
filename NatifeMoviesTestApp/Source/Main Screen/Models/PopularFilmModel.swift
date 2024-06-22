@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct ResponseList: Codable {
+struct ResponseMoviesList: Codable {
     var results: [PopularFilmModel]?
 }
 
-struct PopularFilmModel: Codable {
+struct PopularFilmModel: Codable, Identifiable, Hashable {
     let adult: Bool
     let backdrop_path: String
     let genre_ids:[Int]

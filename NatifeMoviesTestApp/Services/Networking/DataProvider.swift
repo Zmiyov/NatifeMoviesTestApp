@@ -16,26 +16,43 @@ final class DataProvider {
         self.repository = repository
     }
     
-    func getPopularMoviesList(completion: @escaping(Error?) -> Void) {
-        repository.load(url: APIConfig.baseURL,
-                        parameters: APIConfig.Parameters.defaultParameters,
-                        headers: HTTPHeaders(APIConfig.Headers.defaultHeaders))
-        { (response: ResponseList?, error) in
+    func getPopularMoviesList(completion: @escaping([PopularFilmModel]?, Error?) -> Void) {
+        repository.load(url: APIConfig.baseMoviesListURL,
+                        parameters: APIConfig.MoviesListParameters.defaultParameters,
+                        headers: HTTPHeaders(APIConfig.MoviesListHeaders.defaultHeaders))
+        { (response: ResponseMoviesList?, error) in
             
             if let error = error {
-                completion(error)
+                completion(nil, error)
                 return
             }
             
             guard let movieModelsArray = response?.results else {
-                completion(error)
+                completion(nil, error)
                 return
             }
-            
-            print(movieModelsArray)
-            completion(nil)
+
+            completion(movieModelsArray, nil)
         }
     }
     
-    
+    func getGenresList(completion: @escaping([GenresModel]?, Error?) -> Void) {
+        repository.load(url: APIConfig.baseMoviesGenresURL,
+                        parameters: APIConfig.MoviesGenresParameters.defaultParameters,
+                        headers: HTTPHeaders(APIConfig.MoviesGenresHeaders.defaultHeaders))
+        { (response: ResponseGenresList?, error) in
+            
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            guard let movieModelsArray = response?.genres else {
+                completion(nil, error)
+                return
+            }
+
+            completion(movieModelsArray, nil)
+        }
+    }
 }

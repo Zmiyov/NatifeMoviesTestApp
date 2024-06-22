@@ -11,9 +11,6 @@ import Alamofire
 final class APIManager {
 
     static let shared = APIManager()
-    
-//    let headers: HTTPHeaders = HTTPHeaders(APIConfig.Headers.defaultHeaders)
-//    let parameters: Parameters = APIConfig.Parameters.defaultParameters
 
     func load<T: Decodable>(url: String, parameters: Parameters? = nil, headers: HTTPHeaders? = nil, completion: @escaping (T?, Error?) -> Void) {
         AF.request(url, parameters: parameters, headers: headers).responseDecodable(of: T.self) { response in
