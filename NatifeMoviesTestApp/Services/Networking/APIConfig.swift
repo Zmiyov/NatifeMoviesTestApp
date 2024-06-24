@@ -24,6 +24,14 @@ struct APIConfig {
             "language": "en-US",
             "page": "1"
         ]
+        
+        static func makeMovieListParameters(page: String) -> [String: String] {
+            var parameters = [
+                "language": "en-US",
+                "page": page
+            ]
+            return parameters
+        }
     }
     
     struct MoviesGenresHeaders {

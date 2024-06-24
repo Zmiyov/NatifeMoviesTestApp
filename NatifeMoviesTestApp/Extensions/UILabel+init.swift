@@ -13,7 +13,6 @@ extension UILabel {
         self.font = font
         self.textAlignment = alighment
         self.textColor = .white
-        self.backgroundColor = .clear
         self.adjustsFontSizeToFitWidth = false
         self.translatesAutoresizingMaskIntoConstraints = false
     }

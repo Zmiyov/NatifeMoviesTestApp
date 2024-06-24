@@ -11,19 +11,19 @@ struct ResponseMoviesList: Codable {
     var results: [PopularFilmModel]?
 }
 
-struct PopularFilmModel: Codable, Identifiable, Hashable {
+struct PopularFilmModel: Codable, Hashable {
     let adult: Bool
-    let backdrop_path: String
-    let genre_ids:[Int]
+    let backdropPath: String
+    let genreIds:[Int]
     let id: Int
-    let original_language: String
-    let original_title: String
+    let originalLanguage: String
+    let originalTitle: String
     let overview: String
     let popularity: Double
-    let poster_path: String
-    let release_date: String
+    let posterPath: String
+    let releaseDate: String
     let title: String
     let video: Bool
-    let vote_average: Double
-    let vote_count: Int
+    let voteAverage: Double
+    let voteCount: Int
 }

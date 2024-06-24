@@ -11,8 +11,10 @@ struct MoviesListCellModel: Hashable {
     let title: String
     let year: String
     let genres: String
+    let popularity: String
     let rating: String
     let imageURL: String
+    let adult: Bool
     
     var cellTitle: String {
         self.title + ", " + self.year

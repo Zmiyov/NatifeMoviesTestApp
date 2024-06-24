@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum SortOption {
+    case none
+    case popular
+    case rating
+    case adult
+}
+
 final class MainScreenViewModel {
     
     private let dataProvider = DataProvider(repository: APIManager.shared)
@@ -17,12 +24,22 @@ final class MainScreenViewModel {
     private var cellModels: [MoviesListCellModel] = []
     var filterdCellModels = Dynamic([MoviesListCellModel]())
     
-    private enum TextLabels: String {
-        case title = "Popular Movies"
+    private(set) var totalPages = 500
+    private(set) var numberOfMoviesOnOnePage = 20
+    var numberOfLoadedPage: Int = 1 {
+        didSet {
+            guard cellModels.count / 20 < numberOfLoadedPage else { return }
+            Task {
+                await loadData()
+                sortFilteredMoviesModels()
+            }
+        }
     }
     
-    var title: String {
-        TextLabels.title.rawValue.localized()
+    var sortOption: SortOption = .none {
+        didSet {
+            sortFilteredMoviesModels()
+        }
     }
     
     var searchText: String = "" {
@@ -31,18 +48,25 @@ final class MainScreenViewModel {
         }
     }
     
-    private var numberOfLoadedPages: Int = 1
+    var title: String { AppTextConstants.MainScreen.title.localized() }
+    var searchPlaceholder: String { AppTextConstants.MainScreen.searchPlaceholder.localized() }
+    var actionSheetTitle: String { AppTextConstants.MainScreen.ActionSheet.title.localized() }
+    var noActionTitle: String { AppTextConstants.MainScreen.ActionSheet.noneTitle.localized() }
+    var popularActionTitle: String { AppTextConstants.MainScreen.ActionSheet.popularTitle.localized() }
+    var ratingActionTitle: String { AppTextConstants.MainScreen.ActionSheet.ratingTitle.localized() }
+    var adultActionTitle: String { AppTextConstants.MainScreen.ActionSheet.adultTitle.localized() }
+    var cancelActionTitle: String { AppTextConstants.MainScreen.ActionSheet.cancelTitle.localized() }
     
     init() {
         Task {
             await loadData()
-            filterMoviesModels(text: searchText)
+            sortFilteredMoviesModels()
         }
     }
     
     private func loadMoviesListData(page: String) async -> [PopularFilmModel] {
         await withCheckedContinuation { continuation in
-            dataProvider.getPopularMoviesList { moviesArray, error in
+            dataProvider.getPopularMoviesList(page: page) { moviesArray, error in
                 if let error {
                     print(error.localizedDescription)
                     return
@@ -75,16 +99,18 @@ final class MainScreenViewModel {
     }
     
     private func loadData() async {
-        let loadedModels = await loadMoviesListData(page: String(numberOfLoadedPages))
+        let loadedModels = await loadMoviesListData(page: String(numberOfLoadedPage))
         self.modelsArray = self.modelsArray + loadedModels
         self.genresArray = await loadGenresData()
         
         self.cellModels = modelsArray.map{
             MoviesListCellModel(title: $0.title,
-                                year: extractYearFromStringDate(date: $0.release_date),
-                                genres: convertIdsToGenres(ids: $0.genre_ids),
-                                rating: String($0.popularity),
-                                imageURL: $0.poster_path)
+                                year: extractYearFromStringDate(date: $0.releaseDate),
+                                genres: convertIdsToGenres(ids: $0.genreIds),
+                                popularity: String($0.popularity), 
+                                rating: String($0.voteAverage),
+                                imageURL: $0.posterPath,
+                                adult: $0.adult)
         }
     }
     
@@ -103,11 +129,40 @@ final class MainScreenViewModel {
         return year
     }
     
-    func filterMoviesModels(text: String) {
+    private func filterMoviesModels(text: String) {
         if text.isEmpty {
             self.filterdCellModels.value = cellModels
         } else {
             self.filterdCellModels.value = cellModels.filter{ $0.title.contains(text) }
         }
+    }
+    
+    private func sortFilteredMoviesModels() {
+        filterMoviesModels(text: searchText)
+        let filteredModels = filterdCellModels.value
+        switch sortOption {
+        case .none:
+            break
+        case .popular:
+            filterdCellModels.value = filteredModels.sorted(by: { model1, model2 in
+                guard let lhs = Double(model1.popularity), let rhs = Double(model2.popularity) else { return false }
+                return lhs > rhs
+            })
+        case .rating:
+            filterdCellModels.value = filteredModels.sorted(by: { model1, model2 in
+                guard let lhs = Double(model1.rating), let rhs = Double(model2.rating) else { return false }
+                return lhs > rhs
+            })
+        case .adult:
+            filterdCellModels.value = filteredModels.filter{ $0.adult}
+        }
+    }
+    
+    func reoadData() {
+        self.modelsArray = []
+        self.genresArray = []
+        self.cellModels = []
+        self.filterdCellModels.value = []
+        self.numberOfLoadedPage = 1
     }
 }

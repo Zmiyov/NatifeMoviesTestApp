@@ -14,6 +14,14 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     let genresLabel = UILabel(font: UIFont.systemFont(ofSize: 15, weight: .semibold))
     let ratingLabel = UILabel(font: UIFont.systemFont(ofSize: 13, weight: .regular), alighment: .right)
     
+    let containerView1: UIView = {
+        var view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .white
+        return view
+    }()
+    
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 8
@@ -39,44 +47,55 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         imageView.image = nil
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        containerView1.drawShadow()
+        titleLabel.drawShadow()
+    }
+    
     func configure(with movie: MoviesListCellModel) {
         self.titleLabel.text = movie.cellTitle
         self.genresLabel.text = movie.genres
-        self.ratingLabel.text = movie.rating
+        self.ratingLabel.text = movie.popularity
         self.imageView.kf.setImage(with: URL(string: movie.fullImageURL))
     }
     
     private func setupView() {
-        layer.cornerRadius = 12
-        backgroundColor = .tertiarySystemBackground
+        contentView.backgroundColor = .clear
         genresLabel.numberOfLines = 3
-
-        contentView.addSubview(imageView)
-        imageView.addSubview(titleLabel)
-        imageView.addSubview(genresLabel)
-        imageView.addSubview(ratingLabel)
     }
     
     private func setConstraints() {
-
+        contentView.addSubview(containerView1)
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+            containerView1.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            containerView1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            containerView1.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            containerView1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
         ])
 
+        containerView1.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: containerView1.topAnchor, constant: 5),
+            imageView.leadingAnchor.constraint(equalTo: containerView1.leadingAnchor, constant: 5),
+            imageView.bottomAnchor.constraint(equalTo: containerView1.bottomAnchor, constant: -5),
+            imageView.trailingAnchor.constraint(equalTo: containerView1.trailingAnchor, constant: -5),
+        ])
+
+        imageView.addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 15),
             titleLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 15),
             titleLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -15)
         ])
 
+        imageView.addSubview(genresLabel)
         NSLayoutConstraint.activate([
             genresLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -15),
             genresLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 15)
         ])
 
+        imageView.addSubview(ratingLabel)
         NSLayoutConstraint.activate([
             ratingLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -15),
             ratingLabel.leadingAnchor.constraint(equalTo: genresLabel.trailingAnchor, constant: 15),

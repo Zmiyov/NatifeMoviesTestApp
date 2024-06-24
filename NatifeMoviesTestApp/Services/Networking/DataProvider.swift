@@ -16,9 +16,10 @@ final class DataProvider {
         self.repository = repository
     }
     
-    func getPopularMoviesList(completion: @escaping([PopularFilmModel]?, Error?) -> Void) {
+    func getPopularMoviesList(page: String, completion: @escaping([PopularFilmModel]?, Error?) -> Void) {
+        
         repository.load(url: APIConfig.baseMoviesListURL,
-                        parameters: APIConfig.MoviesListParameters.defaultParameters,
+                        parameters: APIConfig.MoviesListParameters.makeMovieListParameters(page: page),
                         headers: HTTPHeaders(APIConfig.MoviesListHeaders.defaultHeaders))
         { (response: ResponseMoviesList?, error) in
             

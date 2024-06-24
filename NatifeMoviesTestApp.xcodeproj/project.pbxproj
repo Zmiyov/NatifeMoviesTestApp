@@ -27,6 +27,12 @@
 		A58CF3CD2C2721C800AB72A9 /* MoviesListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3CC2C2721C800AB72A9 /* MoviesListCellModel.swift */; };
 		A58CF3CF2C2722C300AB72A9 /* MainScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3CE2C2722C300AB72A9 /* MainScreenViewModel.swift */; };
 		A58CF3D32C27241000AB72A9 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3D22C27241000AB72A9 /* Dynamic.swift */; };
+		A58CF3D62C281DD600AB72A9 /* AppTextConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3D52C281DD600AB72A9 /* AppTextConstants.swift */; };
+		A58CF3DC2C295ACA00AB72A9 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3DB2C295ACA00AB72A9 /* EmptyView.swift */; };
+		A58CF3DE2C295DF300AB72A9 /* EmptyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3DD2C295DF300AB72A9 /* EmptyDataSource.swift */; };
+		A58CF3E12C29696C00AB72A9 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3E02C29696C00AB72A9 /* CoordinatorProtocol.swift */; };
+		A58CF3E32C29699500AB72A9 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3E22C29699500AB72A9 /* MainCoordinator.swift */; };
+		A58CF3E52C2976F200AB72A9 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3E42C2976F200AB72A9 /* UIView+Shadow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +56,12 @@
 		A58CF3CC2C2721C800AB72A9 /* MoviesListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListCellModel.swift; sourceTree = "<group>"; };
 		A58CF3CE2C2722C300AB72A9 /* MainScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewModel.swift; sourceTree = "<group>"; };
 		A58CF3D22C27241000AB72A9 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
+		A58CF3D52C281DD600AB72A9 /* AppTextConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextConstants.swift; sourceTree = "<group>"; };
+		A58CF3DB2C295ACA00AB72A9 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		A58CF3DD2C295DF300AB72A9 /* EmptyDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataSource.swift; sourceTree = "<group>"; };
+		A58CF3E02C29696C00AB72A9 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		A58CF3E22C29699500AB72A9 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		A58CF3E42C2976F200AB72A9 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +98,7 @@
 			children = (
 				A58CF3D02C2723EE00AB72A9 /* Common */,
 				A58CF3A62C25E76B00AB72A9 /* Services */,
+				A58CF3DF2C29691600AB72A9 /* Coordinator */,
 				A58CF3A82C25E79700AB72A9 /* Source */,
 				A58CF3C02C26C5C300AB72A9 /* Extensions */,
 				A58CF3922C25DC8200AB72A9 /* AppDelegate.swift */,
@@ -118,6 +131,7 @@
 		A58CF3AB2C260EDF00AB72A9 /* Main Screen */ = {
 			isa = PBXGroup;
 			children = (
+				A58CF3DA2C295AAB00AB72A9 /* EmptyState */,
 				A58CF3B22C26129400AB72A9 /* Models */,
 				A58CF3BD2C26C30D00AB72A9 /* Cell */,
 				A58CF3AC2C260F2200AB72A9 /* MainScreenViewController.swift */,
@@ -159,6 +173,7 @@
 			children = (
 				A58CF3C12C26C5E900AB72A9 /* String+Localized.swift */,
 				A58CF3C32C26C77C00AB72A9 /* UILabel+init.swift */,
+				A58CF3E42C2976F200AB72A9 /* UIView+Shadow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -166,6 +181,7 @@
 		A58CF3D02C2723EE00AB72A9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A58CF3D42C281DBF00AB72A9 /* Constants */,
 				A58CF3D12C2723F800AB72A9 /* Binding */,
 			);
 			path = Common;
@@ -177,6 +193,32 @@
 				A58CF3D22C27241000AB72A9 /* Dynamic.swift */,
 			);
 			path = Binding;
+			sourceTree = "<group>";
+		};
+		A58CF3D42C281DBF00AB72A9 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				A58CF3D52C281DD600AB72A9 /* AppTextConstants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		A58CF3DA2C295AAB00AB72A9 /* EmptyState */ = {
+			isa = PBXGroup;
+			children = (
+				A58CF3DB2C295ACA00AB72A9 /* EmptyView.swift */,
+				A58CF3DD2C295DF300AB72A9 /* EmptyDataSource.swift */,
+			);
+			path = EmptyState;
+			sourceTree = "<group>";
+		};
+		A58CF3DF2C29691600AB72A9 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				A58CF3E02C29696C00AB72A9 /* CoordinatorProtocol.swift */,
+				A58CF3E22C29699500AB72A9 /* MainCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,12 +304,18 @@
 				A58CF3CF2C2722C300AB72A9 /* MainScreenViewModel.swift in Sources */,
 				A58CF3C62C26CBE200AB72A9 /* GenresModel.swift in Sources */,
 				A58CF3AD2C260F2200AB72A9 /* MainScreenViewController.swift in Sources */,
+				A58CF3D62C281DD600AB72A9 /* AppTextConstants.swift in Sources */,
 				A58CF3BC2C26196400AB72A9 /* DataProvider.swift in Sources */,
 				A58CF3B52C2616BF00AB72A9 /* APIConfig.swift in Sources */,
+				A58CF3E52C2976F200AB72A9 /* UIView+Shadow.swift in Sources */,
+				A58CF3DC2C295ACA00AB72A9 /* EmptyView.swift in Sources */,
 				A58CF3D32C27241000AB72A9 /* Dynamic.swift in Sources */,
 				A58CF3C22C26C5E900AB72A9 /* String+Localized.swift in Sources */,
+				A58CF3DE2C295DF300AB72A9 /* EmptyDataSource.swift in Sources */,
 				A58CF3C42C26C77C00AB72A9 /* UILabel+init.swift in Sources */,
 				A58CF3B72C26178800AB72A9 /* APIManager.swift in Sources */,
+				A58CF3E32C29699500AB72A9 /* MainCoordinator.swift in Sources */,
+				A58CF3E12C29696C00AB72A9 /* CoordinatorProtocol.swift in Sources */,
 				A58CF3B12C26111700AB72A9 /* PopularFilmModel.swift in Sources */,
 				A58CF3CD2C2721C800AB72A9 /* MoviesListCellModel.swift in Sources */,
 				A58CF3BF2C26C31400AB72A9 /* MovieCollectionViewCell.swift in Sources */,

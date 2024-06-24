@@ -11,9 +11,12 @@ import Alamofire
 final class APIManager {
 
     static let shared = APIManager()
-
+    
     func load<T: Decodable>(url: String, parameters: Parameters? = nil, headers: HTTPHeaders? = nil, completion: @escaping (T?, Error?) -> Void) {
-        AF.request(url, parameters: parameters, headers: headers).responseDecodable(of: T.self) { response in
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        AF.request(url, parameters: parameters, headers: headers).responseDecodable(of: T.self, decoder: decoder) { response in
             switch response.result {
             case .success(let data):
                 completion(data, nil)
