@@ -18,26 +18,22 @@ final class AlertManager {
             return
         }
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK".localized(), style: .default, handler: nil)
+        let okAction = UIAlertAction(title: AppTextConstants.Alert.okButtonTitle.localized(), style: .default, handler: nil)
         alertController.addAction(okAction)
         alertController.modalTransitionStyle = .crossDissolve
         topViewController.present(alertController, animated: true, completion: nil)
     }
     
     func showNoConnectionAlert() {
-        showAlert(title: "No connection".localized(), message: "You are offline. Please, enable your Wi-Fi or connect using cellular data.".localized())
-    }
-    
-    func showConnectionAlert() {
-        showAlert(title: "Connection Available".localized(), message: "Internet connection is now reachable.".localized())
+        showAlert(title: AppTextConstants.Alert.noConnectionTitle.localized(), message: AppTextConstants.Alert.noConnectionMessage.localized())
     }
     
     func showInfoAlert(message: String) {
-        showAlert(title: "Info".localized(), message: message.localized())
+        showAlert(title: AppTextConstants.Alert.infoTitle.localized(), message: message.localized())
     }
     
     func showErrorAlert(error: Error) {
-        showAlert(title: "Error".localized(), message: error.localizedDescription)
+        showAlert(title: AppTextConstants.Alert.errorTitle.localized(), message: error.localizedDescription)
     }
 
     

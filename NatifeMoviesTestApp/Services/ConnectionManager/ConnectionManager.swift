@@ -20,7 +20,6 @@ final class ConnectionManager {
 
         reachability.whenReachable = { _ in
             self.isConnected = true
-            AlertManager.shared.showConnectionAlert()
         }
         
         reachability.whenUnreachable = { _ in

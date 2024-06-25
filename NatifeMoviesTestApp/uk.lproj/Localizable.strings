@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  NatifeMoviesTestApp
+
+  Created by Volodymyr Pysarenko on 25.06.2024.
+  
+*/
+
+"Popular Movies" = "Популярні фільми";
+"Search" = "Пошук";
+"Choose Option" = "Оберіть опцію";
+"No sorting" = "Без сортування";
+"Popularity" = "Популярність";
+"Rating" = "Рейтинг";
+"Adult" = "Дорослі";
+"Cancel" = "Відмінити";
+"OK" = "ОК";
+"No connection" = "Немає з'єднання";
+"You are offline. Please, enable your Wi-Fi or connect using cellular data." = "Ви офлайн. Будь-ласка ввімкніть Wi-Fi або підключіть стільниковий зв'язок";
+"Info" = "Інформація";
+"Error" = "Помилка";
+"No Data" = "Немає данних";
+"Rating: " = "Рейтинг: ";
+"No country" = "Країна не відома";

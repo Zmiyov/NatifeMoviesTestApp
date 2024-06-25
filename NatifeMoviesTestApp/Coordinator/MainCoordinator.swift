@@ -30,13 +30,11 @@ final class MainCoordinator: CoordinatorProtocol {
     }
     
     func showZoomViewController(image: UIImage) {
-//        guard let image = imageView.image else { return }
         let zoomVC = ZoomViewController(image: image)
         navigationController.present(zoomVC, animated: true)
     }
     
     func showTrailerVideo(fullVideoURL: String) {
-//        let urlString = APIConfig.constructURLForEndpoint(endpoint: .youTube(detailViewModel.youTubeKey.value))
         let youTubePlayerViewController = YouTubePlayerViewController(player: YouTubePlayer(stringLiteral: fullVideoURL))
         navigationController.pushViewController(youTubePlayerViewController, animated: false)
     }

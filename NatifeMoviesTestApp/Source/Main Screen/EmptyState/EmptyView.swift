@@ -8,7 +8,8 @@
 import UIKit
 
 final class EmptyView: UIView {
-    let imageView: UIImageView = {
+    
+    private let imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "noData")
         imageView.contentMode = .scaleAspectFit

@@ -97,6 +97,9 @@ final class MainScreenViewController: UIViewController {
     
     @objc
     private func openSortingOptionsList() {
+        if searchBar.isFirstResponder {
+            searchBar.resignFirstResponder()
+        }
         configureActionSheet()
     }
     
@@ -144,21 +147,25 @@ final class MainScreenViewController: UIViewController {
         
         let noneButton = UIAlertAction(title: mainScreenViewModel.noActionTitle, style: .default, handler: { [unowned self] _ in
             self.mainScreenViewModel.sortOption = .none
+            scrollToTop()
         })
         noneButton.setValue(self.mainScreenViewModel.sortOption == .none, forKey: "checked")
         
         let popularButton = UIAlertAction(title: mainScreenViewModel.popularActionTitle, style: .default, handler: { [unowned self] _ in
             self.mainScreenViewModel.sortOption = .popular
+            scrollToTop()
         })
         popularButton.setValue(self.mainScreenViewModel.sortOption == .popular, forKey: "checked")
         
         let ratingButton = UIAlertAction(title: mainScreenViewModel.ratingActionTitle, style: .default, handler: { [unowned self] _ in
             self.mainScreenViewModel.sortOption = .rating
+            scrollToTop()
         })
         ratingButton.setValue(self.mainScreenViewModel.sortOption == .rating, forKey: "checked")
 
         let adultButton = UIAlertAction(title: mainScreenViewModel.adultActionTitle, style: .default, handler: { [unowned self] _ in
             self.mainScreenViewModel.sortOption = .adult
+            scrollToTop()
         })
         adultButton.setValue(self.mainScreenViewModel.sortOption == .adult, forKey: "checked")
 
@@ -170,6 +177,10 @@ final class MainScreenViewController: UIViewController {
         optionMenu.addAction(adultButton)
         optionMenu.addAction(cancel)
         self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    private func scrollToTop() {
+        collectionView.setContentOffset(CGPoint.zero, animated: false)
     }
 }
 
@@ -183,7 +194,6 @@ extension MainScreenViewController {
             cell?.configure(with: movie)
             return cell
         }, emptyStateView: EmptyView())
-        updateDataSource()
     }
     
     func updateDataSource() {
@@ -215,8 +225,9 @@ extension MainScreenViewController: UICollectionViewDelegateFlowLayout {
         
         let displayedMovieOrderNumber = indexPath.item + 1
         if displayedMovieOrderNumber % mainScreenViewModel.numberOfMoviesOnOnePage == 0 {
+            
             let nextPageNumber = (displayedMovieOrderNumber / mainScreenViewModel.numberOfMoviesOnOnePage) + 1
-            guard nextPageNumber <= mainScreenViewModel.totalPages else { return }
+            guard nextPageNumber <= mainScreenViewModel.totalPages, nextPageNumber > mainScreenViewModel.numberOfLoadedPage else { return }
             
             guard ConnectionManager.shared.isConnected else {
                 AlertManager.shared.showNoConnectionAlert()
@@ -262,6 +273,7 @@ extension MainScreenViewController {
 extension MainScreenViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         mainScreenViewModel.searchText = searchText
+        scrollToTop()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

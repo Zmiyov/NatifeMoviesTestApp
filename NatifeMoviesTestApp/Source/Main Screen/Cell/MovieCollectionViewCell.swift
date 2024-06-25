@@ -10,11 +10,11 @@ import UIKit
 
 final class MovieCollectionViewCell: UICollectionViewCell {
     
-    let titleLabel = UILabel(font: UIFont.systemFont(ofSize: 17, weight: .bold))
-    let genresLabel = UILabel(font: UIFont.systemFont(ofSize: 15, weight: .semibold))
-    let ratingLabel = UILabel(font: UIFont.systemFont(ofSize: 13, weight: .regular), alighment: .right)
+    private let titleLabel = UILabel(font: UIFont.systemFont(ofSize: 17, weight: .bold))
+    private let genresLabel = UILabel(font: UIFont.systemFont(ofSize: 15, weight: .semibold))
+    private let ratingLabel = UILabel(font: UIFont.systemFont(ofSize: 13, weight: .regular), alighment: .right)
     
-    let containerView1: UIView = {
+    private let containerView1: UIView = {
         var view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 12
@@ -22,7 +22,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 8
         imageView.backgroundColor = UIColor(cgColor: CGColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1))
@@ -44,13 +44,16 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         imageView.image = nil
+        titleLabel.text = nil
+        genresLabel.text = nil
+        ratingLabel.text = nil
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         containerView1.drawShadow()
-        titleLabel.drawShadow()
     }
     
     func configure(with movie: MoviesListCellModel) {

@@ -7,54 +7,22 @@
 
 import Foundation
 import Alamofire
+import CoreData
 
 final class DataProvider {
     
+    private let persistentContainer: NSPersistentContainer
     private let repository: APIManager
     
-    init(repository: APIManager) {
+    var viewContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
+    private var genresArray: [GenresModel] = []
+    
+    init(persistentContainer: NSPersistentContainer, repository: APIManager) {
+        self.persistentContainer = persistentContainer
         self.repository = repository
-    }
-    
-    func getPopularMoviesList(page: String, completion: @escaping([PopularFilmModel]?, Error?) -> Void) {
-        
-        repository.load(url: APIConfig.constructURLForEndpoint(endpoint: .list),
-                        parameters: APIConfig.MoviesListParameters.makeMovieListParameters(page: page),
-                        headers: HTTPHeaders(APIConfig.MoviesListHeaders.defaultHeaders))
-        { (response: ResponseMoviesList?, error) in
-            
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            
-            guard let movieModelsArray = response?.results else {
-                completion(nil, error)
-                return
-            }
-
-            completion(movieModelsArray, nil)
-        }
-    }
-    
-    func getGenresList(completion: @escaping([GenresModel]?, Error?) -> Void) {
-        repository.load(url: APIConfig.constructURLForEndpoint(endpoint: .genres),
-                        parameters: APIConfig.MoviesGenresParameters.defaultParameters,
-                        headers: HTTPHeaders(APIConfig.MoviesGenresHeaders.defaultHeaders))
-        { (response: ResponseGenresList?, error) in
-            
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            
-            guard let movieModelsArray = response?.genres else {
-                completion(nil, error)
-                return
-            }
-
-            completion(movieModelsArray, nil)
-        }
     }
     
     func getMovieCountry(movieID: String, completion: @escaping(MovieDetailsModel?, Error?) -> Void) {
@@ -72,7 +40,7 @@ final class DataProvider {
                 completion(nil, error)
                 return
             }
-
+            
             completion(movieDetails, nil)
         }
     }
@@ -92,8 +60,125 @@ final class DataProvider {
                 completion(nil, error)
                 return
             }
-
+            
             completion(trailersData, nil)
+        }
+    }
+    
+    
+    func getPopularMoviesList(page: String) async -> [PopularFilmModel] {
+        await withCheckedContinuation { continuation in
+            repository.load(url: APIConfig.constructURLForEndpoint(endpoint: .list),
+                            parameters: APIConfig.MoviesListParameters.makeMovieListParameters(page: page),
+                            headers: HTTPHeaders(APIConfig.MoviesListHeaders.defaultHeaders))
+            { (response: ResponseMoviesList?, error) in
+                
+                if let error = error {
+                    AlertManager.shared.showErrorAlert(error: error)
+                    return
+                }
+                
+                guard let movieModelsArray = response?.results else {
+                    print("No list data")
+                    return
+                }
+                continuation.resume(returning: movieModelsArray)
+            }
+        }
+    }
+    
+    func getGenresList() async -> [GenresModel] {
+        await withCheckedContinuation { continuation in
+            repository.load(url: APIConfig.constructURLForEndpoint(endpoint: .genres),
+                            parameters: APIConfig.MoviesGenresParameters.defaultParameters,
+                            headers: HTTPHeaders(APIConfig.MoviesGenresHeaders.defaultHeaders))
+            { (response: ResponseGenresList?, error) in
+                
+                if let error = error {
+                    AlertManager.shared.showErrorAlert(error: error)
+                    return
+                }
+                
+                guard let movieGenresArray = response?.genres else {
+                    print("No genres data")
+                    return
+                }
+                
+                continuation.resume(returning: movieGenresArray)
+            }
+        }
+    }
+    
+    func syncMovieCellModels(page number: Int) async {
+        let loadedModels = await getPopularMoviesList(page: String(number))
+        self.genresArray = await getGenresList()
+        
+        let cellModels = loadedModels.map{
+            MoviesListCellModel(movieId: String($0.id),
+                                title: $0.title,
+                                description: $0.overview,
+                                year: extractYearFromStringDate(date: $0.releaseDate),
+                                genres: convertIdsToGenres(ids: $0.genreIds),
+                                popularity: String($0.popularity),
+                                rating: String($0.voteAverage),
+                                imageURL: $0.posterPath,
+                                country: $0.originalLanguage,
+                                adult: $0.adult)
+        }
+        
+        let taskContext = self.persistentContainer.newBackgroundContext()
+        taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        saveNewModels(models: cellModels, context: taskContext)
+    }
+    
+    private func convertIdsToGenres(ids: [Int]) -> String {
+        let genres = genresArray.filter{ ids.contains($0.id) }.map{ $0.name }
+        return genres.joined(separator: ", ")
+    }
+    
+    private func extractYearFromStringDate(date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        guard let date = dateFormatter.date(from: date) else { return AppTextConstants.Service.noData.localized() }
+        let calendar = Calendar.current
+        let year = String(calendar.component(.year, from: date))
+        return year
+    }
+    
+    func saveNewModels(models: [MoviesListCellModel], context: NSManagedObjectContext) {
+        for modelData in models {
+            let id = modelData.movieId
+
+            let fetchRequest: NSFetchRequest<MovieEntity> = MovieEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "movieId == %@", id)
+
+            do {
+                let results = try context.fetch(fetchRequest)
+                if results.isEmpty {
+                    guard let cellModelEntity = NSEntityDescription.insertNewObject(forEntityName: "MovieEntity",
+                                                                                   into: context) as? MovieEntity else {
+                        print("Error: Failed to create a new Movie object!")
+                        return
+                    }
+                    
+                    do {
+                        try cellModelEntity.update(with: modelData)
+                    } catch {
+                        print("Error: \(error)\nThe Movie object will be deleted.")
+                        context.delete(cellModelEntity)
+                    }
+                }
+            } catch {
+                print("Fetch request failed: \(error.localizedDescription)")
+            }
+        }
+
+        do {
+            try context.save()
+        } catch {
+            print("Failed to save context: \(error.localizedDescription)")
         }
     }
 }

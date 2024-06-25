@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  NatifeMoviesTestApp
+
+  Created by Volodymyr Pysarenko on 25.06.2024.
+  
+*/
+
+"Popular Movies" = "Popular Movies";
+"Search" = "Search";
+"Choose Option" = "Choose Option";
+"No sorting" = "No sorting";
+"Popularity" = "Popularity";
+"Rating" = "Rating";
+"Adult" = "Adult";
+"Cancel" = "Cancel";
+"OK" = "OK";
+"No connection" = "No connection";
+"You are offline. Please, enable your Wi-Fi or connect using cellular data." = "You are offline. Please, enable your Wi-Fi or connect using cellular data.";
+"Info" = "Info";
+"Error" = "Error";
+"No Data" = "No Data";
+"Rating: " = "Rating: ";
+"No country" = "No country";

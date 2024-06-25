@@ -92,7 +92,7 @@ final class DetailScreenViewController: UIViewController {
             countryAndYearLabel.text = await detailViewModel.getCountryAndYear()
             nameLabel.text = detailViewModel.model.title
             genresLabel.text = detailViewModel.model.genres
-            ratingLabel.text = "Rating: " + detailViewModel.model.rating
+            ratingLabel.text = AppTextConstants.DetailScreen.rating + detailViewModel.model.rating
             descriptionLabel.text = detailViewModel.model.description
         }
     }

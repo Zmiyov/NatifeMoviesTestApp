@@ -22,4 +22,21 @@ struct AppTextConstants {
             static let cancelTitle = "Cancel"
         }
     }
+    
+    struct Alert {
+        static let okButtonTitle = "OK"
+        static let noConnectionTitle = "No connection"
+        static let noConnectionMessage = "You are offline. Please, enable your Wi-Fi or connect using cellular data."
+        static let infoTitle = "Info"
+        static let errorTitle = "Error"
+    }
+    
+    struct Service {
+        static let noData = "No Data"
+    }
+    
+    struct DetailScreen {
+        static let rating = "Rating: "
+        static let noCountryTitle = "No country"
+    }
 }

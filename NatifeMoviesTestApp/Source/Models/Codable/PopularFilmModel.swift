@@ -11,7 +11,7 @@ struct ResponseMoviesList: Codable {
     var results: [PopularFilmModel]?
 }
 
-struct PopularFilmModel: Codable, Hashable {
+struct PopularFilmModel: Codable {
     let adult: Bool
     let genreIds:[Int]
     let id: Int

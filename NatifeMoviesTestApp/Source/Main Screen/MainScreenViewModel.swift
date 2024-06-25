@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 enum SortOption {
     case none
@@ -37,10 +38,24 @@ protocol MainScreenViewModelProtocol {
 
 final class MainScreenViewModel: MainScreenViewModelProtocol {
     
-    private let dataProvider = DataProvider(repository: APIManager.shared)
+    private let dataProvider = DataProvider(persistentContainer: CoreDataStack.shared.storeContainer, repository: APIManager.shared)
     
-    private var modelsArray: [PopularFilmModel] = []
-    private var genresArray: [GenresModel] = []
+    lazy var fetchedResultsController: NSFetchedResultsController<MovieEntity> = {
+        let fetchRequest = NSFetchRequest<MovieEntity>(entityName: "MovieEntity")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "popularity", ascending: true)]
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                    managedObjectContext: dataProvider.viewContext,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        do {
+            try controller.performFetch()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+
+        return controller
+    }()
     
     private var cellModels: [MoviesListCellModel] = []
     private(set) var filterdCellModels = Dynamic([MoviesListCellModel]())
@@ -52,13 +67,13 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
         didSet {
             guard cellModels.count / 20 < numberOfLoadedPage else { return }
             Task {
-                await loadData(numberOfLoadedPage: numberOfLoadedPage)
-                sortFilteredMoviesModels()
+                await dataProvider.syncMovieCellModels(page: numberOfLoadedPage)
+                fetchMoviesModels()
             }
         }
     }
     
-    var sortOption: SortOption = .none {
+    var sortOption: SortOption = .popular {
         didSet {
             sortFilteredMoviesModels()
         }
@@ -81,81 +96,9 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     
     init() {
         Task {
-            await loadData(numberOfLoadedPage: numberOfLoadedPage)
-            sortFilteredMoviesModels()
+            await dataProvider.syncMovieCellModels(page: numberOfLoadedPage)
+            fetchMoviesModels()
         }
-    }
-    
-    private func loadMoviesListData(page: String) async -> [PopularFilmModel] {
-        await withCheckedContinuation { continuation in
-            dataProvider.getPopularMoviesList(page: page) { moviesArray, error in
-                if let error {
-                    print(error.localizedDescription)
-                    AlertManager.shared.showErrorAlert(error: error)
-                    return
-                }
-                
-                guard let moviesArray else {
-                    print("There are no movies data")
-                    return
-                }
-                continuation.resume(returning: moviesArray)
-            }
-        }
-    }
-    
-    private func loadGenresData() async -> [GenresModel] {
-        await withCheckedContinuation { continuation in
-            dataProvider.getGenresList { genresArray, error in
-                if let error {
-                    print(error.localizedDescription)
-                    AlertManager.shared.showErrorAlert(error: error)
-                    return
-                }
-                
-                guard let genresArray else {
-                    print("There are no data")
-                    return
-                }
-                continuation.resume(returning: genresArray)
-            }
-        }
-    }
-    
-    private func loadData(numberOfLoadedPage: Int) async {
-        isLoading.value = true
-        let loadedModels = await loadMoviesListData(page: String(numberOfLoadedPage))
-        self.modelsArray = self.modelsArray + loadedModels
-        self.genresArray = await loadGenresData()
-        isLoading.value = false
-        
-        self.cellModels = modelsArray.map{
-            MoviesListCellModel(movieId: $0.id, 
-                                title: $0.title,
-                                description: $0.overview,
-                                year: extractYearFromStringDate(date: $0.releaseDate),
-                                genres: convertIdsToGenres(ids: $0.genreIds),
-                                popularity: String($0.popularity), 
-                                rating: String($0.voteAverage),
-                                imageURL: $0.posterPath, 
-                                country: $0.originalLanguage,
-                                adult: $0.adult)
-        }
-    }
-    
-    private func convertIdsToGenres(ids: [Int]) -> String {
-        let genres = genresArray.filter{ ids.contains($0.id) }.map{ $0.name }
-        return genres.joined(separator: ", ")
-    }
-    
-    private func extractYearFromStringDate(date: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let date = dateFormatter.date(from: date) else { return "No data".localized() }
-        let calendar = Calendar.current
-        let year = String(calendar.component(.year, from: date))
-        return year
     }
     
     private func filterMoviesModels(text: String) {
@@ -188,10 +131,26 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     }
     
     func reloadData() {
-        self.modelsArray = []
-        self.genresArray = []
         self.cellModels = []
         self.filterdCellModels.value = []
         self.numberOfLoadedPage = 1
+    }
+    
+    func fetchMoviesModels() {
+        self.cellModels = []
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+
+        if let coreDataCellModels = fetchedResultsController.fetchedObjects {
+            let cellModels = coreDataCellModels.map({ MoviesListCellModel(movieEntity: $0) })
+            self.cellModels = cellModels
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.sortFilteredMoviesModels()
+            }
+        }
     }
 }

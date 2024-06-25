@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 protocol DetailScreenViewModelProtocol {
     var model: MoviesListCellModel { get }
     var youTubeKey: Dynamic<String> { get }
@@ -19,7 +20,7 @@ final class DetailScreenViewModel: DetailScreenViewModelProtocol {
     private(set) var model: MoviesListCellModel
     private(set) var youTubeKey = Dynamic(String())
     
-    private let dataProvider = DataProvider(repository: APIManager.shared)
+    private let dataProvider = DataProvider(persistentContainer: CoreDataStack.shared.storeContainer, repository: APIManager.shared)
     
     init(model: MoviesListCellModel) {
         self.model = model
@@ -85,7 +86,7 @@ final class DetailScreenViewModel: DetailScreenViewModelProtocol {
     
     func getCountryAndYear() async -> String {
         let country = await getMovieCountry(movie: String(model.movieId))
-        return (country ?? "No country".localized()) + ", " + model.year
+        return (country ?? AppTextConstants.DetailScreen.noCountryTitle.localized()) + ", " + model.year
     }
     
 }

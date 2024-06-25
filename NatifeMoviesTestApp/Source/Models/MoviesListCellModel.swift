@@ -8,8 +8,8 @@
 import Foundation
 
 struct MoviesListCellModel: Hashable, Identifiable {
-    let id: String = UUID().uuidString
-    let movieId: Int
+    let id: String
+    let movieId: String
     let title: String
     let description: String
     let year: String
@@ -26,5 +26,33 @@ struct MoviesListCellModel: Hashable, Identifiable {
     
     var fullImageURL: String {
         APIConfig.constructURLForEndpoint(endpoint: .image) + self.imageURL
+    }
+    
+    init(movieId: String, title: String, description: String, year: String, genres: String, popularity: String, rating: String, imageURL: String, country: String, adult: Bool) {
+        self.id = UUID().uuidString
+        self.movieId = movieId
+        self.title = title
+        self.description = description
+        self.year = year
+        self.genres = genres
+        self.popularity = popularity
+        self.rating = rating
+        self.imageURL = imageURL
+        self.country = country
+        self.adult = adult
+    }
+    
+    init(movieEntity: MovieEntity) {
+        self.id = movieEntity.id ?? ""
+        self.movieId = movieEntity.movieId ?? ""
+        self.title = movieEntity.title ?? ""
+        self.description = movieEntity.movieDescription ?? ""
+        self.year = movieEntity.year ?? ""
+        self.genres = movieEntity.genres ?? ""
+        self.popularity = movieEntity.popularity ?? ""
+        self.rating = movieEntity.rating ?? ""
+        self.imageURL = movieEntity.imageURL ?? ""
+        self.country = movieEntity.country ?? ""
+        self.adult = movieEntity.adult
     }
 }
