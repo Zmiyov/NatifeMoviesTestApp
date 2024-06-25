@@ -37,6 +37,11 @@
 		A58CF3EE2C29CFC100AB72A9 /* TrailersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3ED2C29CFC100AB72A9 /* TrailersDataModel.swift */; };
 		A58CF3F12C2A13ED00AB72A9 /* ZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3F02C2A13ED00AB72A9 /* ZoomViewController.swift */; };
 		A58CF3F42C2A20D600AB72A9 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = A58CF3F32C2A20D600AB72A9 /* YouTubePlayerKit */; };
+		A58CF3FA2C2A9D8A00AB72A9 /* AlertsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3F92C2A9D8A00AB72A9 /* AlertsManager.swift */; };
+		A58CF3FD2C2A9EF100AB72A9 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3FC2C2A9EF100AB72A9 /* ConnectionManager.swift */; };
+		A58CF4002C2A9F7800AB72A9 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = A58CF3FF2C2A9F7800AB72A9 /* Reachability */; };
+		A58CF4062C2AAEEB00AB72A9 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A58CF4052C2AAEEB00AB72A9 /* IQKeyboardManagerSwift */; };
+		A58CF4082C2AB58A00AB72A9 /* UIImage+ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF4072C2AB58A00AB72A9 /* UIImage+ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +74,9 @@
 		A58CF3EB2C29C71100AB72A9 /* DetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModel.swift; sourceTree = "<group>"; };
 		A58CF3ED2C29CFC100AB72A9 /* TrailersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailersDataModel.swift; sourceTree = "<group>"; };
 		A58CF3F02C2A13ED00AB72A9 /* ZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomViewController.swift; sourceTree = "<group>"; };
+		A58CF3F92C2A9D8A00AB72A9 /* AlertsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsManager.swift; sourceTree = "<group>"; };
+		A58CF3FC2C2A9EF100AB72A9 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		A58CF4072C2AB58A00AB72A9 /* UIImage+ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ActivityIndicator.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +84,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A58CF4062C2AAEEB00AB72A9 /* IQKeyboardManagerSwift in Frameworks */,
 				A58CF3CB2C27114F00AB72A9 /* Kingfisher in Frameworks */,
+				A58CF4002C2A9F7800AB72A9 /* Reachability in Frameworks */,
 				A58CF3BA2C2617E500AB72A9 /* Alamofire in Frameworks */,
 				A58CF3F42C2A20D600AB72A9 /* YouTubePlayerKit in Frameworks */,
 			);
@@ -120,6 +130,7 @@
 		A58CF3A62C25E76B00AB72A9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A58CF3FB2C2A9EDF00AB72A9 /* ConnectionManager */,
 				A58CF3B32C2616AA00AB72A9 /* Networking */,
 			);
 			path = Services;
@@ -182,6 +193,7 @@
 				A58CF3C12C26C5E900AB72A9 /* String+Localized.swift */,
 				A58CF3C32C26C77C00AB72A9 /* UILabel+init.swift */,
 				A58CF3E42C2976F200AB72A9 /* UIView+Shadow.swift */,
+				A58CF4072C2AB58A00AB72A9 /* UIImage+ActivityIndicator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -189,6 +201,7 @@
 		A58CF3D02C2723EE00AB72A9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A58CF3F82C2A9D7900AB72A9 /* Alerts */,
 				A58CF3D42C281DBF00AB72A9 /* Constants */,
 				A58CF3D12C2723F800AB72A9 /* Binding */,
 				A58CF3C02C26C5C300AB72A9 /* Extensions */,
@@ -248,6 +261,22 @@
 			path = ZoomView;
 			sourceTree = "<group>";
 		};
+		A58CF3F82C2A9D7900AB72A9 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				A58CF3F92C2A9D8A00AB72A9 /* AlertsManager.swift */,
+			);
+			path = Alerts;
+			sourceTree = "<group>";
+		};
+		A58CF3FB2C2A9EDF00AB72A9 /* ConnectionManager */ = {
+			isa = PBXGroup;
+			children = (
+				A58CF3FC2C2A9EF100AB72A9 /* ConnectionManager.swift */,
+			);
+			path = ConnectionManager;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -268,6 +297,8 @@
 				A58CF3B92C2617E500AB72A9 /* Alamofire */,
 				A58CF3CA2C27114F00AB72A9 /* Kingfisher */,
 				A58CF3F32C2A20D600AB72A9 /* YouTubePlayerKit */,
+				A58CF3FF2C2A9F7800AB72A9 /* Reachability */,
+				A58CF4052C2AAEEB00AB72A9 /* IQKeyboardManagerSwift */,
 			);
 			productName = NatifeMoviesTestApp;
 			productReference = A58CF38F2C25DC8200AB72A9 /* NatifeMoviesTestApp.app */;
@@ -301,6 +332,8 @@
 				A58CF3B82C2617E500AB72A9 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				A58CF3C92C27114F00AB72A9 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				A58CF3F22C2A20D600AB72A9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				A58CF3FE2C2A9F7800AB72A9 /* XCRemoteSwiftPackageReference "Reachability" */,
+				A58CF4042C2AAEEB00AB72A9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = A58CF3902C25DC8200AB72A9 /* Products */;
 			projectDirPath = "";
@@ -332,6 +365,7 @@
 				A58CF3C62C26CBE200AB72A9 /* GenresModel.swift in Sources */,
 				A58CF3AD2C260F2200AB72A9 /* MainScreenViewController.swift in Sources */,
 				A58CF3EC2C29C71100AB72A9 /* DetailsModel.swift in Sources */,
+				A58CF3FD2C2A9EF100AB72A9 /* ConnectionManager.swift in Sources */,
 				A58CF3D62C281DD600AB72A9 /* AppTextConstants.swift in Sources */,
 				A58CF3BC2C26196400AB72A9 /* DataProvider.swift in Sources */,
 				A58CF3E82C298FDA00AB72A9 /* DetailScreenViewController.swift in Sources */,
@@ -348,8 +382,10 @@
 				A58CF3EA2C29909300AB72A9 /* DetailScreenViewModel.swift in Sources */,
 				A58CF3E32C29699500AB72A9 /* MainCoordinator.swift in Sources */,
 				A58CF3E12C29696C00AB72A9 /* CoordinatorProtocol.swift in Sources */,
+				A58CF3FA2C2A9D8A00AB72A9 /* AlertsManager.swift in Sources */,
 				A58CF3B12C26111700AB72A9 /* PopularFilmModel.swift in Sources */,
 				A58CF3CD2C2721C800AB72A9 /* MoviesListCellModel.swift in Sources */,
+				A58CF4082C2AB58A00AB72A9 /* UIImage+ActivityIndicator.swift in Sources */,
 				A58CF3BF2C26C31400AB72A9 /* MovieCollectionViewCell.swift in Sources */,
 				A58CF3932C25DC8200AB72A9 /* AppDelegate.swift in Sources */,
 				A58CF3952C25DC8200AB72A9 /* SceneDelegate.swift in Sources */,
@@ -593,6 +629,22 @@
 				minimumVersion = 1.8.0;
 			};
 		};
+		A58CF3FE2C2A9F7800AB72A9 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		A58CF4042C2AAEEB00AB72A9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -610,6 +662,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A58CF3F22C2A20D600AB72A9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
 			productName = YouTubePlayerKit;
+		};
+		A58CF3FF2C2A9F7800AB72A9 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A58CF3FE2C2A9F7800AB72A9 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
+		A58CF4052C2AAEEB00AB72A9 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A58CF4042C2AAEEB00AB72A9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

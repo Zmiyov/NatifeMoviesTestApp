@@ -34,11 +34,12 @@ final class DetailScreenViewModel: DetailScreenViewModelProtocol {
             dataProvider.getMovieCountry(movieID: id) { detailsModel, error in
                 if let error {
                     print(error.localizedDescription)
+                    AlertManager.shared.showErrorAlert(error: error)
                     return
                 }
                 
                 guard let detailsModel else {
-                    print("There are no details data".localized())
+                    print("There are no details data")
                     return
                 }
                 
@@ -61,11 +62,12 @@ final class DetailScreenViewModel: DetailScreenViewModelProtocol {
             dataProvider.getMovieTrailer(movieID: id) { trailersDataArray, error in
                 if let error {
                     print(error.localizedDescription)
+                    AlertManager.shared.showErrorAlert(error: error)
                     return
                 }
                 
                 guard let trailersDataArray else {
-                    print("There are no trailers data".localized())
+                    print("There are no trailers data")
                     return
                 }
                 
@@ -75,14 +77,14 @@ final class DetailScreenViewModel: DetailScreenViewModelProtocol {
     }
     
     private func getTrailerURL() async {
-        let trailersData = await getTrailersData(movie: String(model.id))
+        let trailersData = await getTrailersData(movie: String(model.movieId))
         if let youTubeKey = trailersData.filter({ $0.site == "YouTube" }).map({ $0.key }).first {
             self.youTubeKey.value = youTubeKey
         }
     }
     
     func getCountryAndYear() async -> String {
-        let country = await getMovieCountry(movie: String(model.id))
+        let country = await getMovieCountry(movie: String(model.movieId))
         return (country ?? "No country".localized()) + ", " + model.year
     }
     

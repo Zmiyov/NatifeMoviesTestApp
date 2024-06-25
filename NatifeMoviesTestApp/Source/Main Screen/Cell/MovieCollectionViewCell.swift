@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Kingfisher
+
 
 final class MovieCollectionViewCell: UICollectionViewCell {
     
@@ -57,7 +57,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         self.titleLabel.text = movie.cellTitle
         self.genresLabel.text = movie.genres
         self.ratingLabel.text = movie.popularity
-        self.imageView.kf.setImage(with: URL(string: movie.fullImageURL))
+        self.imageView.loadImage(URL(string: movie.fullImageURL))
     }
     
     private func setupView() {

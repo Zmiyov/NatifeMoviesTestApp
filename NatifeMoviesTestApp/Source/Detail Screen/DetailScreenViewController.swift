@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 import YouTubePlayerKit
 
 final class DetailScreenViewController: UIViewController {
@@ -83,7 +82,7 @@ final class DetailScreenViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         title = detailViewModel.model.title
-        imageView.kf.setImage(with: URL(string: detailViewModel.model.fullImageURL))
+        imageView.loadImage(URL(string: detailViewModel.model.fullImageURL))
     }
     
     private func setupLabels() {

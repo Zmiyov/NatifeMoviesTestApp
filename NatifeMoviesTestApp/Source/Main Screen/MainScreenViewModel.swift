@@ -14,7 +14,28 @@ enum SortOption {
     case adult
 }
 
-final class MainScreenViewModel {
+protocol MainScreenViewModelProtocol {
+    var filterdCellModels: Dynamic<[MoviesListCellModel]> { get }
+    var isLoading: Dynamic<Bool> { get }
+    var totalPages: Int { get }
+    var numberOfMoviesOnOnePage: Int { get }
+    var numberOfLoadedPage: Int { get set }
+    var sortOption: SortOption { get set }
+    var searchText: String { get set }
+    
+    var title: String { get }
+    var searchPlaceholder: String { get }
+    var actionSheetTitle: String { get }
+    var noActionTitle: String { get }
+    var popularActionTitle: String { get }
+    var ratingActionTitle: String { get }
+    var adultActionTitle: String { get }
+    var cancelActionTitle: String { get }
+    
+    func reloadData()
+}
+
+final class MainScreenViewModel: MainScreenViewModelProtocol {
     
     private let dataProvider = DataProvider(repository: APIManager.shared)
     
@@ -22,7 +43,8 @@ final class MainScreenViewModel {
     private var genresArray: [GenresModel] = []
     
     private var cellModels: [MoviesListCellModel] = []
-    var filterdCellModels = Dynamic([MoviesListCellModel]())
+    private(set) var filterdCellModels = Dynamic([MoviesListCellModel]())
+    private(set) var isLoading = Dynamic(Bool())
     
     private(set) var totalPages = 500
     private(set) var numberOfMoviesOnOnePage = 20
@@ -30,7 +52,7 @@ final class MainScreenViewModel {
         didSet {
             guard cellModels.count / 20 < numberOfLoadedPage else { return }
             Task {
-                await loadData()
+                await loadData(numberOfLoadedPage: numberOfLoadedPage)
                 sortFilteredMoviesModels()
             }
         }
@@ -59,7 +81,7 @@ final class MainScreenViewModel {
     
     init() {
         Task {
-            await loadData()
+            await loadData(numberOfLoadedPage: numberOfLoadedPage)
             sortFilteredMoviesModels()
         }
     }
@@ -69,11 +91,12 @@ final class MainScreenViewModel {
             dataProvider.getPopularMoviesList(page: page) { moviesArray, error in
                 if let error {
                     print(error.localizedDescription)
+                    AlertManager.shared.showErrorAlert(error: error)
                     return
                 }
                 
                 guard let moviesArray else {
-                    print("There are no data".localized())
+                    print("There are no movies data")
                     return
                 }
                 continuation.resume(returning: moviesArray)
@@ -86,11 +109,12 @@ final class MainScreenViewModel {
             dataProvider.getGenresList { genresArray, error in
                 if let error {
                     print(error.localizedDescription)
+                    AlertManager.shared.showErrorAlert(error: error)
                     return
                 }
                 
                 guard let genresArray else {
-                    print("There are no data".localized())
+                    print("There are no data")
                     return
                 }
                 continuation.resume(returning: genresArray)
@@ -98,13 +122,15 @@ final class MainScreenViewModel {
         }
     }
     
-    private func loadData() async {
+    private func loadData(numberOfLoadedPage: Int) async {
+        isLoading.value = true
         let loadedModels = await loadMoviesListData(page: String(numberOfLoadedPage))
         self.modelsArray = self.modelsArray + loadedModels
         self.genresArray = await loadGenresData()
+        isLoading.value = false
         
         self.cellModels = modelsArray.map{
-            MoviesListCellModel(id: $0.id, 
+            MoviesListCellModel(movieId: $0.id, 
                                 title: $0.title,
                                 description: $0.overview,
                                 year: extractYearFromStringDate(date: $0.releaseDate),
@@ -161,7 +187,7 @@ final class MainScreenViewModel {
         }
     }
     
-    func reoadData() {
+    func reloadData() {
         self.modelsArray = []
         self.genresArray = []
         self.cellModels = []

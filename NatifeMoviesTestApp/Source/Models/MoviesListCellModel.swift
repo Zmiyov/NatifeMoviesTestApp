@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct MoviesListCellModel: Hashable {
-    let id: Int
+struct MoviesListCellModel: Hashable, Identifiable {
+    let id: String = UUID().uuidString
+    let movieId: Int
     let title: String
     let description: String
     let year: String

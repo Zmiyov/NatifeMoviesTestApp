@@ -18,17 +18,18 @@ final class MainScreenViewController: UIViewController {
     }
     
     var coordinator: MainCoordinator?
-    var mainScreenViewModel: MainScreenViewModel
+    var mainScreenViewModel: MainScreenViewModelProtocol
     
-    let searchBar: UISearchBar = {
+    private let searchBar: UISearchBar = {
         var searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
 
-    let collectionView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alwaysBounceVertical = true
         collectionView.register(MovieCollectionViewCell.self,
@@ -36,8 +37,17 @@ final class MainScreenViewController: UIViewController {
         return collectionView
     }()
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, MoviesListCellModel>!
-    var filteredItemsSnapshot: NSDiffableDataSourceSnapshot<Section, MoviesListCellModel> {
+    private let indicator: UIActivityIndicatorView = {
+        let indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.color = .black
+        indicator.isHidden = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Section, MoviesListCellModel>!
+    private var filteredItemsSnapshot: NSDiffableDataSourceSnapshot<Section, MoviesListCellModel> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, MoviesListCellModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(mainScreenViewModel.filterdCellModels.value)
@@ -46,7 +56,7 @@ final class MainScreenViewController: UIViewController {
     
     private let refreshControl = UIRefreshControl()
     
-    init(mainScreenViewModel: MainScreenViewModel) {
+    init(mainScreenViewModel: MainScreenViewModelProtocol) {
         self.mainScreenViewModel = mainScreenViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -92,9 +102,16 @@ final class MainScreenViewController: UIViewController {
     
     @objc
     private func didPullToRefresh(_ sender: Any) {
+        
+        guard ConnectionManager.shared.isConnected else {
+            refreshControl.endRefreshing()
+            AlertManager.shared.showNoConnectionAlert()
+            return
+        }
+        
         DispatchQueue.main.async {
             self.collectionView.performBatchUpdates {
-                self.mainScreenViewModel.reoadData()
+                self.mainScreenViewModel.reloadData()
             } completion: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.refreshControl.endRefreshing()
@@ -107,6 +124,17 @@ final class MainScreenViewController: UIViewController {
         mainScreenViewModel.filterdCellModels.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.updateDataSource()
+            }
+        }
+        
+        mainScreenViewModel.isLoading.bind { [weak self] isLoading in
+            DispatchQueue.main.async {
+                if isLoading {
+                    self?.indicator.isHidden = false
+                    self?.indicator.startAnimating()
+                } else {
+                    self?.indicator.stopAnimating()
+                }
             }
         }
     }
@@ -174,6 +202,10 @@ extension MainScreenViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard ConnectionManager.shared.isConnected else {
+            AlertManager.shared.showNoConnectionAlert()
+            return
+        }
         let model = mainScreenViewModel.filterdCellModels.value[indexPath.item]
         coordinator?.showDetail(for: model)
     }
@@ -185,6 +217,12 @@ extension MainScreenViewController: UICollectionViewDelegateFlowLayout {
         if displayedMovieOrderNumber % mainScreenViewModel.numberOfMoviesOnOnePage == 0 {
             let nextPageNumber = (displayedMovieOrderNumber / mainScreenViewModel.numberOfMoviesOnOnePage) + 1
             guard nextPageNumber <= mainScreenViewModel.totalPages else { return }
+            
+            guard ConnectionManager.shared.isConnected else {
+                AlertManager.shared.showNoConnectionAlert()
+                return
+            }
+            
             mainScreenViewModel.numberOfLoadedPage = nextPageNumber
         }
     }
@@ -210,6 +248,12 @@ extension MainScreenViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
+        
+        view.addSubview(indicator)
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor, constant: 0),
+            indicator.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor, constant: 0)
+        ])
     }
 }
 
@@ -218,5 +262,9 @@ extension MainScreenViewController {
 extension MainScreenViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         mainScreenViewModel.searchText = searchText
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
