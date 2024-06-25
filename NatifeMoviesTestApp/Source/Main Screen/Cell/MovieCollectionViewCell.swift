@@ -7,14 +7,13 @@
 
 import UIKit
 
-
 final class MovieCollectionViewCell: UICollectionViewCell {
     
     private let titleLabel = UILabel(font: UIFont.systemFont(ofSize: 17, weight: .bold))
     private let genresLabel = UILabel(font: UIFont.systemFont(ofSize: 15, weight: .semibold))
     private let ratingLabel = UILabel(font: UIFont.systemFont(ofSize: 13, weight: .regular), alighment: .right)
     
-    private let containerView1: UIView = {
+    private let containerView: UIView = {
         var view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 12
@@ -25,12 +24,13 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 8
-        imageView.backgroundColor = UIColor(cgColor: CGColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    private let gradientLayer = CAGradientLayer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,18 +49,21 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         titleLabel.text = nil
         genresLabel.text = nil
         ratingLabel.text = nil
+        gradientLayer.removeFromSuperlayer()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        containerView1.drawShadow()
+        containerView.drawShadow()
     }
     
     func configure(with movie: MoviesListCellModel) {
         self.titleLabel.text = movie.cellTitle
         self.genresLabel.text = movie.genres
         self.ratingLabel.text = movie.popularity
-        self.imageView.loadImage(URL(string: movie.fullImageURL))
+        self.imageView.loadImage(URL(string: movie.fullImageURL)) { [weak self] in
+            self?.setupGradient()
+        }
     }
     
     private func setupView() {
@@ -68,21 +71,44 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         genresLabel.numberOfLines = 3
     }
     
+    private func setupGradient() {
+        gradientLayer.frame = self.imageView.bounds
+        
+        gradientLayer.colors = [
+            UIColor.black.cgColor,  // 25% Black
+            UIColor.clear.cgColor,  // 50% Clear
+            UIColor.clear.cgColor,  // 50% Clear
+            UIColor.black.cgColor   // 25% Black
+        ]
+        
+        gradientLayer.locations = [
+            0.0,   // Start of gradient
+            0.25,  // 25% point
+            0.75,  // 75% point
+            1.0    // End of gradient
+        ]
+        
+        self.imageView.layer.addSublayer(gradientLayer)
+        imageView.bringSubviewToFront(titleLabel)
+        imageView.bringSubviewToFront(genresLabel)
+        imageView.bringSubviewToFront(ratingLabel)
+    }
+    
     private func setConstraints() {
-        contentView.addSubview(containerView1)
+        contentView.addSubview(containerView)
         NSLayoutConstraint.activate([
-            containerView1.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            containerView1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            containerView1.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
-            containerView1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
         ])
 
-        containerView1.addSubview(imageView)
+        containerView.addSubview(imageView)
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: containerView1.topAnchor, constant: 5),
-            imageView.leadingAnchor.constraint(equalTo: containerView1.leadingAnchor, constant: 5),
-            imageView.bottomAnchor.constraint(equalTo: containerView1.bottomAnchor, constant: -5),
-            imageView.trailingAnchor.constraint(equalTo: containerView1.trailingAnchor, constant: -5),
+            imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5),
+            imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 5),
+            imageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
+            imageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -5),
         ])
 
         imageView.addSubview(titleLabel)
@@ -105,5 +131,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
             ratingLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -15),
             ratingLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.25)
         ])
+        
+        
     }
 }

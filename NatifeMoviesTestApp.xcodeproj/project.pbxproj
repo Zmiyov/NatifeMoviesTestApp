@@ -128,15 +128,10 @@
 			children = (
 				A58CF3D02C2723EE00AB72A9 /* Common */,
 				A58CF3A62C25E76B00AB72A9 /* Services */,
-				A58CF3DF2C29691600AB72A9 /* Coordinator */,
 				A58CF3A82C25E79700AB72A9 /* Source */,
+				A58CF41A2C2B484500AB72A9 /* Resources */,
 				A58CF3922C25DC8200AB72A9 /* AppDelegate.swift */,
 				A58CF3942C25DC8200AB72A9 /* SceneDelegate.swift */,
-				A58CF39B2C25DC8300AB72A9 /* Assets.xcassets */,
-				A58CF39D2C25DC8300AB72A9 /* LaunchScreen.storyboard */,
-				A58CF3A02C25DC8300AB72A9 /* Info.plist */,
-				A58CF40D2C2AD15F00AB72A9 /* MovieDataModel.xcdatamodeld */,
-				A58CF4152C2B1FE500AB72A9 /* Localizable.strings */,
 			);
 			path = NatifeMoviesTestApp;
 			sourceTree = "<group>";
@@ -154,6 +149,7 @@
 		A58CF3A82C25E79700AB72A9 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A58CF3DF2C29691600AB72A9 /* Coordinator */,
 				A58CF3B22C26129400AB72A9 /* Models */,
 				A58CF3AB2C260EDF00AB72A9 /* Main Screen */,
 				A58CF3E62C298F1900AB72A9 /* Detail Screen */,
@@ -316,6 +312,18 @@
 				A58CF4112C2AD31B00AB72A9 /* MovieEntity+CoreDataProperties.swift */,
 			);
 			path = ManagedObjectModels;
+			sourceTree = "<group>";
+		};
+		A58CF41A2C2B484500AB72A9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A58CF39B2C25DC8300AB72A9 /* Assets.xcassets */,
+				A58CF39D2C25DC8300AB72A9 /* LaunchScreen.storyboard */,
+				A58CF3A02C25DC8300AB72A9 /* Info.plist */,
+				A58CF40D2C2AD15F00AB72A9 /* MovieDataModel.xcdatamodeld */,
+				A58CF4152C2B1FE500AB72A9 /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -593,7 +601,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H32J47ML7Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NatifeMoviesTestApp/Info.plist;
+				INFOPLIST_FILE = NatifeMoviesTestApp/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -621,7 +629,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H32J47ML7Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NatifeMoviesTestApp/Info.plist;
+				INFOPLIST_FILE = NatifeMoviesTestApp/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -741,8 +749,7 @@
 				A58CF40E2C2AD15F00AB72A9 /* MovieDataModel.xcdatamodel */,
 			);
 			currentVersion = A58CF40E2C2AD15F00AB72A9 /* MovieDataModel.xcdatamodel */;
-			name = MovieDataModel.xcdatamodeld;
-			path = "/Users/vladimirpisarenko/Desktop/Swift Projects/Test/NatifeMoviesTestApp/NatifeMoviesTestApp/MovieDataModel.xcdatamodeld";
+			path = MovieDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

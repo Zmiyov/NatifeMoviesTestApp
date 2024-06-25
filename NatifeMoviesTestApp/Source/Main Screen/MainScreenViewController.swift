@@ -77,9 +77,9 @@ final class MainScreenViewController: UIViewController {
     }
     
     private func configureView() {
-        title = mainScreenViewModel.title
-        searchBar.placeholder = mainScreenViewModel.searchPlaceholder
         view.backgroundColor = .white
+        title = AppTextConstants.MainScreen.title.localized()
+        searchBar.placeholder = AppTextConstants.MainScreen.searchPlaceholder.localized()
         let barButtonImage = UIImage(systemName: "menubar.arrow.down.rectangle")?.withTintColor(.black).withRenderingMode(.alwaysOriginal)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: barButtonImage, style: .plain, target: self, action: #selector(openSortingOptionsList))
     }
@@ -143,33 +143,33 @@ final class MainScreenViewController: UIViewController {
     }
     
     private func configureActionSheet() {
-        let optionMenu = UIAlertController(title: nil, message: mainScreenViewModel.actionSheetTitle, preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: AppTextConstants.MainScreen.ActionSheet.title.localized(), preferredStyle: .actionSheet)
         
-        let noneButton = UIAlertAction(title: mainScreenViewModel.noActionTitle, style: .default, handler: { [unowned self] _ in
-            self.mainScreenViewModel.sortOption = .none
-            scrollToTop()
+        let noneButton = UIAlertAction(title: AppTextConstants.MainScreen.ActionSheet.noneTitle.localized(), style: .default, handler: { [weak self] _ in
+            self?.mainScreenViewModel.sortOption = .none
+            self?.scrollToTop()
         })
         noneButton.setValue(self.mainScreenViewModel.sortOption == .none, forKey: "checked")
         
-        let popularButton = UIAlertAction(title: mainScreenViewModel.popularActionTitle, style: .default, handler: { [unowned self] _ in
-            self.mainScreenViewModel.sortOption = .popular
-            scrollToTop()
+        let popularButton = UIAlertAction(title: AppTextConstants.MainScreen.ActionSheet.popularTitle.localized(), style: .default, handler: { [weak self] _ in
+            self?.mainScreenViewModel.sortOption = .popular
+            self?.scrollToTop()
         })
         popularButton.setValue(self.mainScreenViewModel.sortOption == .popular, forKey: "checked")
         
-        let ratingButton = UIAlertAction(title: mainScreenViewModel.ratingActionTitle, style: .default, handler: { [unowned self] _ in
-            self.mainScreenViewModel.sortOption = .rating
-            scrollToTop()
+        let ratingButton = UIAlertAction(title: AppTextConstants.MainScreen.ActionSheet.ratingTitle.localized(), style: .default, handler: { [weak self] _ in
+            self?.mainScreenViewModel.sortOption = .rating
+            self?.scrollToTop()
         })
         ratingButton.setValue(self.mainScreenViewModel.sortOption == .rating, forKey: "checked")
 
-        let adultButton = UIAlertAction(title: mainScreenViewModel.adultActionTitle, style: .default, handler: { [unowned self] _ in
-            self.mainScreenViewModel.sortOption = .adult
-            scrollToTop()
+        let adultButton = UIAlertAction(title: AppTextConstants.MainScreen.ActionSheet.adultTitle.localized(), style: .default, handler: { [weak self] _ in
+            self?.mainScreenViewModel.sortOption = .adult
+            self?.scrollToTop()
         })
         adultButton.setValue(self.mainScreenViewModel.sortOption == .adult, forKey: "checked")
 
-        let cancel = UIAlertAction(title: mainScreenViewModel.cancelActionTitle, style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: AppTextConstants.MainScreen.ActionSheet.cancelTitle.localized(), style: .cancel, handler: nil)
 
         optionMenu.addAction(noneButton)
         optionMenu.addAction(popularButton)
@@ -192,6 +192,7 @@ extension MainScreenViewController {
         dataSource = EmptyableDiffableDataSource<Section, MoviesListCellModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, movie) -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainScreenCellIdentifiers.moviesListCell.rawValue, for: indexPath) as? MovieCollectionViewCell
             cell?.configure(with: movie)
+//            cell?.layoutIfNeeded()
             return cell
         }, emptyStateView: EmptyView())
     }

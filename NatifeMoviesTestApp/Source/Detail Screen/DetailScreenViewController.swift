@@ -60,6 +60,15 @@ final class DetailScreenViewController: UIViewController {
         return button
     }()
     
+    private let indicator: UIActivityIndicatorView = {
+        let indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.color = .black
+        indicator.isHidden = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     init(viewModel: DetailScreenViewModelProtocol) {
         self.detailViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -89,11 +98,14 @@ final class DetailScreenViewController: UIViewController {
         descriptionLabel.numberOfLines = 0
         
         Task {
+            indicator.isHidden = false
+            indicator.startAnimating()
             countryAndYearLabel.text = await detailViewModel.getCountryAndYear()
             nameLabel.text = detailViewModel.model.title
             genresLabel.text = detailViewModel.model.genres
             ratingLabel.text = AppTextConstants.DetailScreen.rating + detailViewModel.model.rating
             descriptionLabel.text = detailViewModel.model.description
+            indicator.stopAnimating()
         }
     }
     
@@ -198,6 +210,12 @@ final class DetailScreenViewController: UIViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             descriptionLabel.bottomAnchor.constraint(equalTo: bottomContainerView.bottomAnchor, constant: -15)
+        ])
+        
+        bottomContainerView.addSubview(indicator)
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: bottomContainerView.centerXAnchor, constant: 0),
+            indicator.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor, constant: 0)
         ])
     }
 }

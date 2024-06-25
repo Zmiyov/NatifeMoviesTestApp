@@ -12,6 +12,7 @@ final class EmptyView: UIView {
     private let imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "noData")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -27,7 +28,6 @@ final class EmptyView: UIView {
     }
     
     private func setConstraints() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor),

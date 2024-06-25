@@ -24,15 +24,6 @@ protocol MainScreenViewModelProtocol {
     var sortOption: SortOption { get set }
     var searchText: String { get set }
     
-    var title: String { get }
-    var searchPlaceholder: String { get }
-    var actionSheetTitle: String { get }
-    var noActionTitle: String { get }
-    var popularActionTitle: String { get }
-    var ratingActionTitle: String { get }
-    var adultActionTitle: String { get }
-    var cancelActionTitle: String { get }
-    
     func reloadData()
 }
 
@@ -67,7 +58,8 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
         didSet {
             guard cellModels.count / 20 < numberOfLoadedPage else { return }
             Task {
-                await dataProvider.syncMovieCellModels(page: numberOfLoadedPage)
+                isLoading.value = true
+                await dataProvider.syncMovieCellModels(at: numberOfLoadedPage)
                 fetchMoviesModels()
             }
         }
@@ -85,18 +77,9 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
         }
     }
     
-    var title: String { AppTextConstants.MainScreen.title.localized() }
-    var searchPlaceholder: String { AppTextConstants.MainScreen.searchPlaceholder.localized() }
-    var actionSheetTitle: String { AppTextConstants.MainScreen.ActionSheet.title.localized() }
-    var noActionTitle: String { AppTextConstants.MainScreen.ActionSheet.noneTitle.localized() }
-    var popularActionTitle: String { AppTextConstants.MainScreen.ActionSheet.popularTitle.localized() }
-    var ratingActionTitle: String { AppTextConstants.MainScreen.ActionSheet.ratingTitle.localized() }
-    var adultActionTitle: String { AppTextConstants.MainScreen.ActionSheet.adultTitle.localized() }
-    var cancelActionTitle: String { AppTextConstants.MainScreen.ActionSheet.cancelTitle.localized() }
-    
     init() {
         Task {
-            await dataProvider.syncMovieCellModels(page: numberOfLoadedPage)
+            await dataProvider.syncMovieCellModels(at: numberOfLoadedPage)
             fetchMoviesModels()
         }
     }
@@ -152,5 +135,6 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
                 self.sortFilteredMoviesModels()
             }
         }
+        self.isLoading.value = false
     }
 }

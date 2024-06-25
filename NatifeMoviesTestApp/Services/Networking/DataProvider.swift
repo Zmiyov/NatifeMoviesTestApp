@@ -66,7 +66,7 @@ final class DataProvider {
     }
     
     
-    func getPopularMoviesList(page: String) async -> [PopularFilmModel] {
+    private func getPopularMoviesList(page: String) async -> [PopularFilmModel] {
         await withCheckedContinuation { continuation in
             repository.load(url: APIConfig.constructURLForEndpoint(endpoint: .list),
                             parameters: APIConfig.MoviesListParameters.makeMovieListParameters(page: page),
@@ -87,7 +87,7 @@ final class DataProvider {
         }
     }
     
-    func getGenresList() async -> [GenresModel] {
+    private func getGenresList() async -> [GenresModel] {
         await withCheckedContinuation { continuation in
             repository.load(url: APIConfig.constructURLForEndpoint(endpoint: .genres),
                             parameters: APIConfig.MoviesGenresParameters.defaultParameters,
@@ -108,9 +108,12 @@ final class DataProvider {
             }
         }
     }
-    
-    func syncMovieCellModels(page number: Int) async {
-        let loadedModels = await getPopularMoviesList(page: String(number))
+}
+
+//MARK: - Cache data
+extension DataProvider {
+    func syncMovieCellModels(at page: Int) async {
+        let loadedModels = await getPopularMoviesList(page: String(page))
         self.genresArray = await getGenresList()
         
         let cellModels = loadedModels.map{
@@ -147,7 +150,7 @@ final class DataProvider {
         return year
     }
     
-    func saveNewModels(models: [MoviesListCellModel], context: NSManagedObjectContext) {
+    private func saveNewModels(models: [MoviesListCellModel], context: NSManagedObjectContext) {
         for modelData in models {
             let id = modelData.movieId
 

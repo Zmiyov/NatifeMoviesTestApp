@@ -16,7 +16,7 @@
 "Cancel" = "Cancel";
 "OK" = "OK";
 "No connection" = "No connection";
-"You are offline. Please, enable your Wi-Fi or connect using cellular data." = "You are offline. Please, enable your Wi-Fi or connect using cellular data.";
+"You are offline. Please, enable your Wi-Fi or connect using cellular data." = "You are offline. Please, enable your \nWi-Fi or connect using cellular data.";
 "Info" = "Info";
 "Error" = "Error";
 "No Data" = "No Data";
