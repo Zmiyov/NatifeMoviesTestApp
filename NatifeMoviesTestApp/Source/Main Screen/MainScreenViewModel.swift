@@ -73,7 +73,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     
     var searchText: String = "" {
         didSet {
-            filterMoviesModels(text: searchText)
+            sortFilteredMoviesModels()
         }
     }
     

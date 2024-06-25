@@ -192,7 +192,6 @@ extension MainScreenViewController {
         dataSource = EmptyableDiffableDataSource<Section, MoviesListCellModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, movie) -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainScreenCellIdentifiers.moviesListCell.rawValue, for: indexPath) as? MovieCollectionViewCell
             cell?.configure(with: movie)
-//            cell?.layoutIfNeeded()
             return cell
         }, emptyStateView: EmptyView())
     }
