@@ -8,11 +8,11 @@
 import UIKit
 
 extension UILabel {
-    convenience init(font: UIFont?, alighment: NSTextAlignment = .left) {
+    convenience init(font: UIFont?, alighment: NSTextAlignment = .left, color: UIColor = .white) {
         self.init()
         self.font = font
         self.textAlignment = alighment
-        self.textColor = .white
+        self.textColor = color
         self.adjustsFontSizeToFitWidth = false
         self.translatesAutoresizingMaskIntoConstraints = false
     }

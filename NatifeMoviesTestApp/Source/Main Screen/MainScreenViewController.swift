@@ -174,7 +174,8 @@ extension MainScreenViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        coordinator?.showDetail()
+        let model = mainScreenViewModel.filterdCellModels.value[indexPath.item]
+        coordinator?.showDetail(for: model)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		A58CF3932C25DC8200AB72A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3922C25DC8200AB72A9 /* AppDelegate.swift */; };
 		A58CF3952C25DC8200AB72A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3942C25DC8200AB72A9 /* SceneDelegate.swift */; };
-		A58CF3972C25DC8200AB72A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3962C25DC8200AB72A9 /* ViewController.swift */; };
-		A58CF39A2C25DC8200AB72A9 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = A58CF3992C25DC8200AB72A9 /* Base */; };
 		A58CF39C2C25DC8300AB72A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A58CF39B2C25DC8300AB72A9 /* Assets.xcassets */; };
 		A58CF39F2C25DC8300AB72A9 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = A58CF39E2C25DC8300AB72A9 /* Base */; };
 		A58CF3AD2C260F2200AB72A9 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3AC2C260F2200AB72A9 /* MainScreenViewController.swift */; };
@@ -33,14 +31,18 @@
 		A58CF3E12C29696C00AB72A9 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3E02C29696C00AB72A9 /* CoordinatorProtocol.swift */; };
 		A58CF3E32C29699500AB72A9 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3E22C29699500AB72A9 /* MainCoordinator.swift */; };
 		A58CF3E52C2976F200AB72A9 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3E42C2976F200AB72A9 /* UIView+Shadow.swift */; };
+		A58CF3E82C298FDA00AB72A9 /* DetailScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3E72C298FDA00AB72A9 /* DetailScreenViewController.swift */; };
+		A58CF3EA2C29909300AB72A9 /* DetailScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3E92C29909300AB72A9 /* DetailScreenViewModel.swift */; };
+		A58CF3EC2C29C71100AB72A9 /* DetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3EB2C29C71100AB72A9 /* DetailsModel.swift */; };
+		A58CF3EE2C29CFC100AB72A9 /* TrailersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3ED2C29CFC100AB72A9 /* TrailersDataModel.swift */; };
+		A58CF3F12C2A13ED00AB72A9 /* ZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58CF3F02C2A13ED00AB72A9 /* ZoomViewController.swift */; };
+		A58CF3F42C2A20D600AB72A9 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = A58CF3F32C2A20D600AB72A9 /* YouTubePlayerKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A58CF38F2C25DC8200AB72A9 /* NatifeMoviesTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NatifeMoviesTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58CF3922C25DC8200AB72A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A58CF3942C25DC8200AB72A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A58CF3962C25DC8200AB72A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A58CF3992C25DC8200AB72A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A58CF39B2C25DC8300AB72A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A58CF39E2C25DC8300AB72A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A58CF3A02C25DC8300AB72A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,6 +64,11 @@
 		A58CF3E02C29696C00AB72A9 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		A58CF3E22C29699500AB72A9 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		A58CF3E42C2976F200AB72A9 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
+		A58CF3E72C298FDA00AB72A9 /* DetailScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScreenViewController.swift; sourceTree = "<group>"; };
+		A58CF3E92C29909300AB72A9 /* DetailScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScreenViewModel.swift; sourceTree = "<group>"; };
+		A58CF3EB2C29C71100AB72A9 /* DetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModel.swift; sourceTree = "<group>"; };
+		A58CF3ED2C29CFC100AB72A9 /* TrailersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailersDataModel.swift; sourceTree = "<group>"; };
+		A58CF3F02C2A13ED00AB72A9 /* ZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +78,7 @@
 			files = (
 				A58CF3CB2C27114F00AB72A9 /* Kingfisher in Frameworks */,
 				A58CF3BA2C2617E500AB72A9 /* Alamofire in Frameworks */,
+				A58CF3F42C2A20D600AB72A9 /* YouTubePlayerKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,11 +108,8 @@
 				A58CF3A62C25E76B00AB72A9 /* Services */,
 				A58CF3DF2C29691600AB72A9 /* Coordinator */,
 				A58CF3A82C25E79700AB72A9 /* Source */,
-				A58CF3C02C26C5C300AB72A9 /* Extensions */,
 				A58CF3922C25DC8200AB72A9 /* AppDelegate.swift */,
 				A58CF3942C25DC8200AB72A9 /* SceneDelegate.swift */,
-				A58CF3962C25DC8200AB72A9 /* ViewController.swift */,
-				A58CF3982C25DC8200AB72A9 /* Main.storyboard */,
 				A58CF39B2C25DC8300AB72A9 /* Assets.xcassets */,
 				A58CF39D2C25DC8300AB72A9 /* LaunchScreen.storyboard */,
 				A58CF3A02C25DC8300AB72A9 /* Info.plist */,
@@ -123,7 +128,9 @@
 		A58CF3A82C25E79700AB72A9 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A58CF3B22C26129400AB72A9 /* Models */,
 				A58CF3AB2C260EDF00AB72A9 /* Main Screen */,
+				A58CF3E62C298F1900AB72A9 /* Detail Screen */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -132,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				A58CF3DA2C295AAB00AB72A9 /* EmptyState */,
-				A58CF3B22C26129400AB72A9 /* Models */,
 				A58CF3BD2C26C30D00AB72A9 /* Cell */,
 				A58CF3AC2C260F2200AB72A9 /* MainScreenViewController.swift */,
 				A58CF3CE2C2722C300AB72A9 /* MainScreenViewModel.swift */,
@@ -146,6 +152,8 @@
 				A58CF3CC2C2721C800AB72A9 /* MoviesListCellModel.swift */,
 				A58CF3B02C26111700AB72A9 /* PopularFilmModel.swift */,
 				A58CF3C52C26CBE200AB72A9 /* GenresModel.swift */,
+				A58CF3EB2C29C71100AB72A9 /* DetailsModel.swift */,
+				A58CF3ED2C29CFC100AB72A9 /* TrailersDataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -183,6 +191,7 @@
 			children = (
 				A58CF3D42C281DBF00AB72A9 /* Constants */,
 				A58CF3D12C2723F800AB72A9 /* Binding */,
+				A58CF3C02C26C5C300AB72A9 /* Extensions */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -221,6 +230,24 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		A58CF3E62C298F1900AB72A9 /* Detail Screen */ = {
+			isa = PBXGroup;
+			children = (
+				A58CF3EF2C2A13D100AB72A9 /* ZoomView */,
+				A58CF3E72C298FDA00AB72A9 /* DetailScreenViewController.swift */,
+				A58CF3E92C29909300AB72A9 /* DetailScreenViewModel.swift */,
+			);
+			path = "Detail Screen";
+			sourceTree = "<group>";
+		};
+		A58CF3EF2C2A13D100AB72A9 /* ZoomView */ = {
+			isa = PBXGroup;
+			children = (
+				A58CF3F02C2A13ED00AB72A9 /* ZoomViewController.swift */,
+			);
+			path = ZoomView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -240,6 +267,7 @@
 			packageProductDependencies = (
 				A58CF3B92C2617E500AB72A9 /* Alamofire */,
 				A58CF3CA2C27114F00AB72A9 /* Kingfisher */,
+				A58CF3F32C2A20D600AB72A9 /* YouTubePlayerKit */,
 			);
 			productName = NatifeMoviesTestApp;
 			productReference = A58CF38F2C25DC8200AB72A9 /* NatifeMoviesTestApp.app */;
@@ -272,6 +300,7 @@
 			packageReferences = (
 				A58CF3B82C2617E500AB72A9 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				A58CF3C92C27114F00AB72A9 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				A58CF3F22C2A20D600AB72A9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 			);
 			productRefGroup = A58CF3902C25DC8200AB72A9 /* Products */;
 			projectDirPath = "";
@@ -289,7 +318,6 @@
 			files = (
 				A58CF39C2C25DC8300AB72A9 /* Assets.xcassets in Resources */,
 				A58CF39F2C25DC8300AB72A9 /* Base in Resources */,
-				A58CF39A2C25DC8200AB72A9 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,20 +328,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A58CF3972C25DC8200AB72A9 /* ViewController.swift in Sources */,
 				A58CF3CF2C2722C300AB72A9 /* MainScreenViewModel.swift in Sources */,
 				A58CF3C62C26CBE200AB72A9 /* GenresModel.swift in Sources */,
 				A58CF3AD2C260F2200AB72A9 /* MainScreenViewController.swift in Sources */,
+				A58CF3EC2C29C71100AB72A9 /* DetailsModel.swift in Sources */,
 				A58CF3D62C281DD600AB72A9 /* AppTextConstants.swift in Sources */,
 				A58CF3BC2C26196400AB72A9 /* DataProvider.swift in Sources */,
+				A58CF3E82C298FDA00AB72A9 /* DetailScreenViewController.swift in Sources */,
 				A58CF3B52C2616BF00AB72A9 /* APIConfig.swift in Sources */,
+				A58CF3F12C2A13ED00AB72A9 /* ZoomViewController.swift in Sources */,
 				A58CF3E52C2976F200AB72A9 /* UIView+Shadow.swift in Sources */,
+				A58CF3EE2C29CFC100AB72A9 /* TrailersDataModel.swift in Sources */,
 				A58CF3DC2C295ACA00AB72A9 /* EmptyView.swift in Sources */,
 				A58CF3D32C27241000AB72A9 /* Dynamic.swift in Sources */,
 				A58CF3C22C26C5E900AB72A9 /* String+Localized.swift in Sources */,
 				A58CF3DE2C295DF300AB72A9 /* EmptyDataSource.swift in Sources */,
 				A58CF3C42C26C77C00AB72A9 /* UILabel+init.swift in Sources */,
 				A58CF3B72C26178800AB72A9 /* APIManager.swift in Sources */,
+				A58CF3EA2C29909300AB72A9 /* DetailScreenViewModel.swift in Sources */,
 				A58CF3E32C29699500AB72A9 /* MainCoordinator.swift in Sources */,
 				A58CF3E12C29696C00AB72A9 /* CoordinatorProtocol.swift in Sources */,
 				A58CF3B12C26111700AB72A9 /* PopularFilmModel.swift in Sources */,
@@ -327,14 +359,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		A58CF3982C25DC8200AB72A9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A58CF3992C25DC8200AB72A9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A58CF39D2C25DC8300AB72A9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -561,6 +585,14 @@
 				minimumVersion = 7.12.0;
 			};
 		};
+		A58CF3F22C2A20D600AB72A9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -573,6 +605,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A58CF3C92C27114F00AB72A9 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		A58CF3F32C2A20D600AB72A9 /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A58CF3F22C2A20D600AB72A9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

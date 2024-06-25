@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import YouTubePlayerKit
 
 final class MainCoordinator: CoordinatorProtocol {
     var navigationController: UINavigationController
@@ -21,7 +22,22 @@ final class MainCoordinator: CoordinatorProtocol {
         navigationController.pushViewController(mainViewController, animated: false)
     }
 
-    func showDetail() {
-
+    func showDetail(for model: MoviesListCellModel) {
+        let detailViewModel = DetailScreenViewModel(model: model)
+        let detailViewController = DetailScreenViewController(viewModel: detailViewModel)
+        detailViewController.coordinator = self
+        navigationController.pushViewController(detailViewController, animated: false)
+    }
+    
+    func showZoomViewController(image: UIImage) {
+//        guard let image = imageView.image else { return }
+        let zoomVC = ZoomViewController(image: image)
+        navigationController.present(zoomVC, animated: true)
+    }
+    
+    func showTrailerVideo(fullVideoURL: String) {
+//        let urlString = APIConfig.constructURLForEndpoint(endpoint: .youTube(detailViewModel.youTubeKey.value))
+        let youTubePlayerViewController = YouTubePlayerViewController(player: YouTubePlayer(stringLiteral: fullVideoURL))
+        navigationController.pushViewController(youTubePlayerViewController, animated: false)
     }
 }

@@ -104,12 +104,15 @@ final class MainScreenViewModel {
         self.genresArray = await loadGenresData()
         
         self.cellModels = modelsArray.map{
-            MoviesListCellModel(title: $0.title,
+            MoviesListCellModel(id: $0.id, 
+                                title: $0.title,
+                                description: $0.overview,
                                 year: extractYearFromStringDate(date: $0.releaseDate),
                                 genres: convertIdsToGenres(ids: $0.genreIds),
                                 popularity: String($0.popularity), 
                                 rating: String($0.voteAverage),
-                                imageURL: $0.posterPath,
+                                imageURL: $0.posterPath, 
+                                country: $0.originalLanguage,
                                 adult: $0.adult)
         }
     }

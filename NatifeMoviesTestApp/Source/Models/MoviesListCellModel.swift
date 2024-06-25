@@ -8,12 +8,15 @@
 import Foundation
 
 struct MoviesListCellModel: Hashable {
+    let id: Int
     let title: String
+    let description: String
     let year: String
     let genres: String
     let popularity: String
     let rating: String
     let imageURL: String
+    let country: String
     let adult: Bool
     
     var cellTitle: String {
@@ -21,6 +24,6 @@ struct MoviesListCellModel: Hashable {
     }
     
     var fullImageURL: String {
-        APIConfig.baseImageURL + self.imageURL
+        APIConfig.constructURLForEndpoint(endpoint: .image) + self.imageURL
     }
 }
